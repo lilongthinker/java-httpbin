@@ -1,5 +1,5 @@
 #!/bin/zsh
-#docker login --username=dingyue_cloudnative registry.cn-beijing.aliyuncs.com
+#docker login --username=XXX registry.cn-beijing.aliyuncs.com
 date
 version=$1
 
