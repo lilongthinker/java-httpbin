@@ -17,18 +17,19 @@
 #build stage
 #FROM mamohr/centos-java:jdk8
 #FROM dragonwell-registry.cn-hangzhou.cr.aliyuncs.com/dragonwell/dragonwell:dragonwell-8.10.11_jdk8u322-ga-x86_64
-FROM dragonwell-registry.cn-hangzhou.cr.aliyuncs.com/dragonwell/dragonwell:8-alinux
+#FROM dragonwell-registry.cn-hangzhou.cr.aliyuncs.com/dragonwell/dragonwell:8-alinux
+FROM dragonwell-registry.cn-hangzhou.cr.aliyuncs.com/dragonwell/dragonwell:11
 
-WORKDIR /build
+WORKDIR /
 
 RUN groupadd polaris && adduser -u 1200 -g polaris polaris
 USER 1200
 
 #COPY target/*.jar /app.jar
-COPY --from=builder /build/target/*.jar /app.jar
+COPY target/httpbin-1.5.0-SNAPSHOT-jar-with-dependencies.jar /app.jar
 # add debug port
 ENV JAVA_OPTS="-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=5005"
-ENV SERVER_PORT 8080
+ENV SERVER_PORT=8080
 
 EXPOSE ${SERVER_PORT}
 

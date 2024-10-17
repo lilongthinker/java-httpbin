@@ -113,7 +113,10 @@ public class HttpBinHandler extends AbstractHandler {
                 return;
             } else if (method.equals("GET") && uri.equals("/ip")) {
                 JSONObject response = new JSONObject();
-                response.put("origin", request.getRemoteAddr());
+                String ipListStr = request.getHeader("X-Forwarded-For");
+                String[] ipList = ipListStr.split(",");
+                String ip = ipList[ipList.length-1];
+                response.put("origin", ip);
                 respondJSON(servletResponse, os, response);
                 baseRequest.setHandled(true);
                 return;
