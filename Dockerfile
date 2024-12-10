@@ -1,3 +1,6 @@
+# 安装 nginx
+
+
 #compile stage
 #FROM maven:3.6.3-openjdk-8 AS builder
  #  AS builder 起别名
@@ -16,8 +19,6 @@
 
 #build stage
 #FROM mamohr/centos-java:jdk8
-#FROM dragonwell-registry.cn-hangzhou.cr.aliyuncs.com/dragonwell/dragonwell:dragonwell-8.10.11_jdk8u322-ga-x86_64
-#FROM dragonwell-registry.cn-hangzhou.cr.aliyuncs.com/dragonwell/dragonwell:8-alinux
 FROM dragonwell-registry.cn-hangzhou.cr.aliyuncs.com/dragonwell/dragonwell:11
 
 WORKDIR /
@@ -40,4 +41,5 @@ HEALTHCHECK --interval=10s --timeout=3s \
 #ENTRYPOINT [ "/usr/local/openjdk-8/bin/java","-jar","-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=5005","$JAVA_OPTS","/app.jar" ]
 
 # 造成 java进程非1号进程
-ENTRYPOINT ["sh", "-c", "java $JAVA_OPTS -Xmx3000m -Xms3000m -Djava.security.egd=file:/dev/./urandom -jar /app.jar"]
+ENTRYPOINT ["sh", "-c", "java $JAVA_OPTS -XX:InitialRAMPercentage=75.0 -XX:MaxRAMPercentage=75.0 -Djava.security.egd=file:/dev/./urandom -jar /app.jar"]
+
